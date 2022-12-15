@@ -14,22 +14,16 @@ def sift_detector(new_image, image_template):
     print("Keypoints found in image: ", len(descriptors_1))
     print("Keypoints found in template: ", len(descriptors_2))
 
-    # Define parameters for our Flann Matcher
     FLANN_INDEX_KDTREE = 1
     index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 1)
     search_params = dict(checks = 50)
 
-    # Create the Flann Matcher object
     flann = cv2.FlannBasedMatcher(index_params, search_params)
 
-    # Obtain matches using K-Nearest Neighbor Method
     # the result 'matchs' is the number of similar matches found in both images
     matches = flann.knnMatch(descriptors_1, descriptors_2, k=2)
 
-    # Store good matches using Lowe's ratio test
-    # Need to draw only good matches, so create a mask
     matchesMask = [[0, 0] for i in range(len(matches))]
-    # ratio test as per Lowe's paper
     for i, (m, n) in enumerate(matches):
         if m.distance < 0.7 * n.distance:
             matchesMask[i] = [1, 0]
@@ -70,23 +64,18 @@ def ORB_detector(new_image, image_template):
     keypoints_2, descriptors_2 = orb.detectAndCompute(image2, None)
     print("Keypoints found in image: ", len(descriptors_1))
     print("Keypoints found in template: ", len(descriptors_2))
-
-    # Define parameters for our Flann Matcher
+    
     index_params = dict(algorithm=6,
                         table_number=6,
                         key_size=12,
                         multi_probe_level=2)
     search_params = {}
 
-    # Create the Flann Matcher object
     flann = cv2.FlannBasedMatcher(index_params, search_params)
 
-    # Obtain matches using K-Nearest Neighbor Method
     # the result 'matchs' is the number of similar matches found in both images
     matches = flann.knnMatch(descriptors_1, descriptors_2, k=2)
 
-    # Store good matches using Lowe's ratio test
-    # Need to draw only good matches, so create a mask
     matchesMask = [[0, 0] for i in range(len(matches))]
     # ratio test as per Lowe's paper
     for i, (m, n) in enumerate(matches):
@@ -137,22 +126,18 @@ def BRIEF_detector(new_image, image_template):
     print("Keypoints found in image: ", len(descriptors_1))
     print("Keypoints found in template: ", len(descriptors_2))
 
-    # Define parameters for our Flann Matcher
     index_params = dict(algorithm=6,
                         table_number=6,
                         key_size=12,
                         multi_probe_level=2)
     search_params = {}
 
-    # Create the Flann Matcher object
     flann = cv2.FlannBasedMatcher(index_params, search_params)
 
-    # Obtain matches using K-Nearest Neighbor Method
     # the result 'matchs' is the number of similar matches found in both images
     matches = flann.knnMatch(descriptors_1, descriptors_2, k=2)
 
-    # Store good matches using Lowe's ratio test
-    # Need to draw only good matches, so create a mask
+
     matchesMask = [[0, 0] for i in range(len(matches))]
     # ratio test as per Lowe's paper
     for i, (m, n) in enumerate(matches):
@@ -201,7 +186,6 @@ def Surf_detector(new_image, image_template):
     print("Keypoints found in image: ", len(descriptors_1))
     print("Keypoints found in template: ", len(descriptors_2))
 
-    # Define parameters for our Flann Matcher
     FLANN_INDEX_KDTREE = 1
     index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=1)
     search_params = dict(checks=50)
@@ -209,12 +193,8 @@ def Surf_detector(new_image, image_template):
     # Create the Flann Matcher object
     flann = cv2.FlannBasedMatcher(index_params, search_params)
 
-    # Obtain matches using K-Nearest Neighbor Method
-    # the result 'matchs' is the number of similar matches found in both images
     matches = flann.knnMatch(descriptors_1, descriptors_2, k=2)
 
-    # Store good matches using Lowe's ratio test
-    # Need to draw only good matches, so create a mask
     matchesMask = [[0, 0] for i in range(len(matches))]
     # ratio test as per Lowe's paper
     for i, (m, n) in enumerate(matches):
